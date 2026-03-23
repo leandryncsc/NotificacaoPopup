@@ -1,21 +1,24 @@
 import time
-from plyer import notification
+from winotify import Notification
 import os
 
 def lembrete():
 
     icon_path = "cafe.ico"
     
-    if not os.path.exists(icon_path):
-        icon_path = None
+    kwargs = {
+        "app_id": "Notificacao",
+        "title": "Fala Leandrão, chegou o grande momento!",
+        "msg": "Hora de tomar seu café! ☕",
+        "duration": "short"
+    }
+
+    if os.path.exists(icon_path):
+        kwargs["icon"] = os.path.abspath(icon_path)
     
-    notification.notify(
-        title="Fala Leandrão, chegou o grande momento!",
-        message="Hora de tomar seu café! ☕",
-        timeout=10,
-        app_icon=icon_path  
-        )
+    toast = Notification(**kwargs)
+    toast.show()
 
 while True:
     lembrete()
-    time.sleep(30)  
+    time.sleep(30)
